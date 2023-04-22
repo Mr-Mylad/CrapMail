@@ -2,8 +2,12 @@
 import { initializeApp } from "firebase/app";
 import { 
     getFirestore,
-    collection
+    collection,
+    query,
+    where,
+    getDocs
 } from "firebase/firestore"
+import { log } from "neo-async";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -25,3 +29,29 @@ const firestore = getFirestore(app);
 
 // Initialize Users collection
 const UsersCollection = collection(firestore, "Users");
+
+// Real code
+
+// Login code
+const loginForm = document.querySelector("#login");
+loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const Query = query(UsersCollection, where("email", "==", loginForm.email.value.toLowerCase()));
+    getDocs(Query).then(snapshot => {
+      const errorLogger = loginForm.querySelector("p[name=\"errorMessage\"]");
+        if (snapshot.size === 0) {
+            errorLogger.innerHTML = "The mail given doesn\'t exist! Please try again or make a new account!";
+        } else {
+          let RealPassword = null;
+            snapshot.docs.forEach((doc) => 
+            {
+                RealPassword = doc.data().password;
+            });
+            if (RealPassword !== loginForm.password.value) {
+                errorLogger.innerHTML = "Incorrect password! Please try again, or make a new account!";
+            } else {
+                errorLogger.innerHTML = "Logging you in!";
+            };
+        };
+    });
+});
