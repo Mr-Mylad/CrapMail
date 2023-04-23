@@ -5,7 +5,8 @@ import {
     collection,
     query,
     where,
-    getDocs
+    getDocs,
+    doc
 } from "firebase/firestore"
 import { log } from "neo-async";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -54,4 +55,25 @@ loginForm.addEventListener("submit", (e) => {
             };
         };
     });
+});
+
+// Signup code
+const signupForm = document.querySelector("#signup");
+
+// Login to signup button
+const switchToSignUp = document.querySelector("#switchToSignUp");
+switchToSignUp.addEventListener("click", () => {
+    signupForm.style.display = "block";
+    loginForm.style.display = "none";
+    switchToSignUp.style.display = "none";
+    switchToLogin.style.display = "block";
+});
+
+// Signup to login button
+const switchToLogin = document.querySelector("#switchToLogin");
+switchToLogin.addEventListener("click", () => {
+    loginForm.style.display = "block";
+    signupForm.style.display = "none";
+    switchToSignUp.style.display = "block";
+    switchToLogin.style.display = "none";
 });
