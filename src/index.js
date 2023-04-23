@@ -5,8 +5,7 @@ import {
     collection,
     query,
     where,
-    getDocs,
-    doc
+    getDocs
 } from "firebase/firestore"
 import { log } from "neo-async";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -61,6 +60,18 @@ loginForm.addEventListener("submit", (e) => {
 
 // Signup code
 const signupForm = document.querySelector("#signup");
+signupForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const Query = query(UsersCollection, where("email", "==", signupForm.email.value.toLowerCase()));
+    const errorLogger = signupForm.querySelector("p[name=\"errorMessage\"]");
+    getDocs(Query).then(snapshot => {
+        if (snapshot.size === 1) {
+            errorLogger.innerHTML = "Email address already exists! Try logging in instead!";
+            return;
+        }
+    });
+
+});
 
 // Login to signup button
 const switchToSignUp = document.querySelector("#switchToSignUp");
