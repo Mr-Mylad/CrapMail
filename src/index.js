@@ -42,6 +42,7 @@ loginForm.addEventListener("submit", (e) => {
       const errorLogger = loginForm.querySelector("p[name=\"errorMessage\"]");
         if (snapshot.size === 0) {
             errorLogger.innerHTML = "The mail given doesn\'t exist! Please try again or make a new account!";
+            return;
         } else {
           let RealPassword = null;
             snapshot.docs.forEach((doc) => 
@@ -50,6 +51,7 @@ loginForm.addEventListener("submit", (e) => {
             });
             if (RealPassword !== loginForm.password.value) {
                 errorLogger.innerHTML = "Incorrect password! Please try again, or make a new account!";
+                return;
             } else {
                 errorLogger.innerHTML = "Logging you in!";
             };
