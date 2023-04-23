@@ -68,7 +68,7 @@ signupForm.addEventListener("submit", (e) => {
         if (snapshot.size === 1) {
             errorLogger.innerHTML = "Email address already exists! Try logging in instead!";
             return;
-        }
+        };
     });
 
 });
