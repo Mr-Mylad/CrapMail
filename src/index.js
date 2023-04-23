@@ -5,7 +5,8 @@ import {
     collection,
     query,
     where,
-    getDocs
+    getDocs,
+    addDoc
 } from "firebase/firestore"
 import { log } from "neo-async";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -69,6 +70,13 @@ signupForm.addEventListener("submit", (e) => {
             errorLogger.innerHTML = "Email address already exists! Try logging in instead!";
             return;
         };
+    });
+    addDoc(UsersCollection, {
+        dispName: signupForm.dispName.value,
+        email: signupForm.email.value,
+        password: signupForm.password.value
+    }).then(() => {
+        errorLogger.innerHTML = "Your account has been made! Loading your inbox..."
     });
 });
 
