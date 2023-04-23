@@ -70,7 +70,6 @@ signupForm.addEventListener("submit", (e) => {
             return;
         };
     });
-
 });
 
 // Login to signup button
