@@ -9,34 +9,36 @@
         <title>CrapMail</title>
     </head>
     <body>
-        <h1 class="animated">Welcome to CrapMail!</h1>
-        <form class="animated" id="login">
-            <h1>Login</h1>
-            <input type="text" name="email" placeholder="Your email address here" required>
-            <br>
-            <br>
-            <input type="password" name="password" placeholder="Your password here" required>
-            <p name="errorMessage"></p>
-            <button>Login</button>
-            <br>
-            <br>
-        </form>
-        <button id="switchToSignUp">Don't have an account? Sign up here!</button>
-        
-        <form class="animated" id="signup" style="display: none">
-            <h1>Signup</h1>
-            <input type="text" name="email" placeholder="Your email address here" required>
-            <br>
-            <br>
-            <input type="text" name="dispName" placeholder="Your displayed name here" required>
-            <br>
-            <br>
-            <input type="password" name="password" placeholder="Enter your password" required>
-            <p name="errorMessage"></p>
-            <button>Sign up</button>
-            <br>
-            <br>
-        </form>
-        <button id="switchToLogin" style="display: none;">Already have an account? Log in here!</button>
+        <div id="LoginSignup">
+            <h1 class="animated">Welcome to CrapMail!</h1>
+            <form class="animated" id="login">
+                <h1>Login</h1>
+                <input type="text" name="email" placeholder="Your email address here" required>
+                <br>
+                <br>
+                <input type="password" name="password" placeholder="Your password here" required>
+                <p name="errorMessage"></p>
+                <button>Login</button>
+                <br>
+                <br>
+            </form>
+            <button id="switchToSignUp">Don't have an account? Sign up here!</button>
+            
+            <form class="animated" id="signup" style="display: none">
+                <h1>Signup</h1>
+                <input type="text" name="email" placeholder="Your email address here" required>
+                <br>
+                <br>
+                <input type="text" name="dispName" placeholder="Your displayed name here" required>
+                <br>
+                <br>
+                <input type="password" name="password" placeholder="Enter your password" required>
+                <p name="errorMessage"></p>
+                <button>Sign up</button>
+                <br>
+                <br>
+            </form>
+            <button id="switchToLogin" style="display: none;">Already have an account? Log in here!</button>
+        </div>
     </body>
 </html>
