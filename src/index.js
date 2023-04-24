@@ -8,7 +8,6 @@ import {
     getDocs,
     addDoc
 } from "firebase/firestore"
-import { log } from "neo-async";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -71,6 +70,28 @@ signupForm.addEventListener("submit", (e) => {
             return;
         };
     });
+    if (signupForm.email.value.split("@").length === 1) {
+        errorLogger.innerHTML = "Sorry! You need to have a domain! Random domains are fine but you need to have a domain!";
+        return;
+    } else if (signupForm.email.value.toLowerCase().split("@")[signupForm.email.value.split("@").length - 1] === " " || signupForm.email.value.split("@")[signupForm.email.value.split("@").length - 1] === "") {
+        errorLogger.innerHTML = "Sorry! You need to have a domain! Random domains are fine but you need to have a domain!";
+    }
+    if (signupForm.email.value.endsWith("crapmail.ml") || signupForm.email.value.endsWith("crapmailml")  || signupForm.email.value.endsWith("crapmailml")) {
+        errorLogger.innerHTML = "Sorry! That email domain is for staff/admins only! Please try another email domain.";
+        return;
+    };
+    let properEmail = null;
+    function removeSpaces() {
+        if (signupForm.email.value.endsWith(" ")) {
+            const emailArr = signupForm.email.value.split("");
+            emailArr.pop();
+            signupForm.email.value = emailArr.join("");
+            console.log(emailArr);
+            removeSpaces()
+        } else {
+            return;
+        }
+    } removeSpaces();
     addDoc(UsersCollection, {
         dispName: signupForm.dispName.value,
         email: signupForm.email.value,
