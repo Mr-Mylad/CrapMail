@@ -100,7 +100,7 @@ signupForm.addEventListener("submit", (e) => {
     });
 });
 
-// Login to signup button
+// Switch to signup button
 const switchToSignUp = document.querySelector("#switchToSignUp");
 switchToSignUp.addEventListener("click", () => {
     signupForm.style.display = "block";
