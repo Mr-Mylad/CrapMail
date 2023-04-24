@@ -64,12 +64,23 @@ signupForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const Query = query(UsersCollection, where("email", "==", signupForm.email.value.toLowerCase()));
     const errorLogger = signupForm.querySelector("p[name=\"errorMessage\"]");
+    function removeSpaces() {
+        const emailArr = signupForm.email.value.toLowerCase().split("");
+        emailArr.forEach((i) => {
+            if (i === " ") {
+                emailArr.splice(emailArr.indexOf(" "), 1);
+            };
+        });
+        signupForm.email.value = emailArr.join("");
+    };
+    removeSpaces();
     getDocs(Query).then(snapshot => {
         if (snapshot.size === 1) {
             errorLogger.innerHTML = "Email address already exists! Try logging in instead!";
             return;
         };
     });
+    
     if (signupForm.email.value.split("@").length === 1) {
         errorLogger.innerHTML = "Sorry! You need to have a domain! Random domains are fine but you need to have a domain!";
         return;
@@ -80,18 +91,6 @@ signupForm.addEventListener("submit", (e) => {
         errorLogger.innerHTML = "Sorry! That email domain is for staff/admins only! Please try another email domain.";
         return;
     };
-    let properEmail = null;
-    function removeSpaces() {
-        if (signupForm.email.value.endsWith(" ")) {
-            const emailArr = signupForm.email.value.split("");
-            emailArr.pop();
-            signupForm.email.value = emailArr.join("");
-            console.log(emailArr);
-            removeSpaces()
-        } else {
-            return;
-        }
-    } removeSpaces();
     addDoc(UsersCollection, {
         dispName: signupForm.dispName.value,
         email: signupForm.email.value,
