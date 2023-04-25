@@ -53,6 +53,7 @@ loginForm.addEventListener("submit", (e) => {
                 return;
             } else {
                 errorLogger.innerHTML = "Logging you in!";
+                localStorage.setItem("accountDetails", JSON.stringify({ email: loginForm.email.value, password: loginForm.password.value }));
             };
         };
     });
@@ -97,6 +98,7 @@ signupForm.addEventListener("submit", (e) => {
         password: signupForm.password.value
     }).then(() => {
         errorLogger.innerHTML = "Your account has been made! Loading your inbox...";
+        localStorage.setItem("accountDetails", JSON.stringify({ email: signupForm.email.value, password: signupForm.password.value }));
     });
 });
 
