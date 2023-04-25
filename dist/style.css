@@ -1,3 +1,10 @@
 p[name="errorMessage"] {
     color: red;
 }
+
+.mail {
+    display: flex;
+    border: 5px black dashed;
+    align-items: center;
+    justify-content: center;
+}

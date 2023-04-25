@@ -31,6 +31,9 @@ const firestore = getFirestore(app);
 // Initialize Users collection
 const UsersCollection = collection(firestore, "Users");
 
+// Initialize Mails collection
+const mailsCollection = collection(firestore, "Mails");
+
 // Real code
 
 // Login code
@@ -55,6 +58,7 @@ loginForm.addEventListener("submit", (e) => {
             } else {
                 errorLogger.innerHTML = "Logging you in!";
                 localStorage.setItem("accountDetails", JSON.stringify({ email: loginForm.email.value, password: loginForm.password.value }));
+                loadMailViewer();
             };
         };
     });
@@ -100,6 +104,7 @@ signupForm.addEventListener("submit", (e) => {
     }).then(() => {
         errorLogger.innerHTML = "Your account has been made! Loading your inbox...";
         localStorage.setItem("accountDetails", JSON.stringify({ email: signupForm.email.value, password: signupForm.password.value }));
+        loadMailViewer();
     });
 });
 
@@ -120,3 +125,39 @@ switchToLogin.addEventListener("click", () => {
     switchToSignUp.style.display = "block";
     switchToLogin.style.display = "none";
 });
+
+// Email viewer
+const viewMailParentDiv = document.querySelector("#viewMail");
+const viewMailDiv = document.querySelector("#mails");
+
+function loadMailViewer() {
+    viewMailParentDiv.style.display = "block";
+    loginForm.style.display = "none";
+    signupForm.style.display = "none";
+    switchToSignUp.style.display = "none";
+    switchToLogin.style.display = "none";
+    onSnapshot(mailsCollection, (snapshot) => {
+        snapshot.forEach(doc => {
+            if (doc.data().to !== JSON.parse(localStorage.getItem("accountDetails"))["email"]) return; else {
+                const dispNameQuery = query(UsersCollection, where("email", "==", doc.data().from));
+                getDocs(dispNameQuery).then(snapshot => {
+                    snapshot.docs.forEach(doc2 => {
+                        const mailNode = document.createElement("div");
+                        mailNode.id = doc.id;
+                        mailNode.className = "mail";
+                        const dispName = doc2.data().dispName;
+                        console.log(dispName);
+                        mailNode.innerHTML = `<p>${doc.data().subject}<br>Sent by: ${dispName}</p>
+                        <button class=\"checkMail\">View mail</button>`;
+                        viewMailDiv.appendChild(mailNode);
+                    });
+                });
+            };
+        });
+    });
+};
+
+// Loads the mail viewer if the user has logged in once
+if (localStorage.getItem("accountDetails") !== null) {
+    loadMailViewer();
+}
