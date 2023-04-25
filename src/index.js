@@ -96,7 +96,7 @@ signupForm.addEventListener("submit", (e) => {
         email: signupForm.email.value,
         password: signupForm.password.value
     }).then(() => {
-        errorLogger.innerHTML = "Your account has been made! Loading your inbox..."
+        errorLogger.innerHTML = "Your account has been made! Loading your inbox...";
     });
 });
 
