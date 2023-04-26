@@ -148,7 +148,7 @@ function loadMailViewer() {
                         const dispName = doc2.data().dispName;
                         console.log(dispName);
                         mailNode.innerHTML = `<p>${doc.data().subject}<br>Sent by: ${dispName}</p>
-                        <button class=\"checkMail\">View mail</button>`;
+                        <button class=\"checkMailButtons\" id=\"b_${doc.id}\">View mail</button>`;
                         viewMailDiv.appendChild(mailNode);
                     });
                 });
