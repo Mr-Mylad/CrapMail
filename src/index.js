@@ -312,7 +312,7 @@ replyButton.addEventListener("click", () => {
     getDoc(doc(firestore, "Mails", document.querySelector("#mailId").innerHTML)).then((snapshot) => {
         composeMailForm.to.value = snapshot.data().from;
         composeMailForm.subject.value = `RE: ${snapshot.data().subject}`;
-        composeMailForm.body.value = `<br>-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=<br>${snapshot.data().body}`;
+        composeMailForm.body.value = `\n\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n${snapshot.data().body}`;
     });
 });
 
