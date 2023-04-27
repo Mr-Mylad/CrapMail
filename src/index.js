@@ -224,6 +224,7 @@ deleteMailButton.addEventListener("click", () => {
     viewSpecificMailDiv.style.display = "none";
     viewMailDiv.style.display = "block";
     document.querySelector(`#${mailId}`).remove();
+    mails.pop(mailId);
 });
 
 // Back to inbox
