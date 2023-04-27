@@ -39,6 +39,20 @@ const mailsCollection = collection(firestore, "Mails");
 
 // Real code
 
+// Animation code
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+        } else {
+            entry.target.classList.remove("show");
+        }
+    });
+});
+
+const animatedElements = document.querySelectorAll(".animated");
+animatedElements.forEach(element => observer.observe(element));
+
 // Login code
 const loginForm = document.querySelector("#login");
 loginForm.addEventListener("submit", (e) => {
