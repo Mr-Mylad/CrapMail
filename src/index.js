@@ -245,6 +245,9 @@ composeButton.addEventListener("click", () => {
     viewMailDiv.style.display = "none";
     viewSpecificMailDiv.style.display = "none";
     composeMailForm.from.value = JSON.parse(localStorage.getItem("accountDetails"))["email"];
+    composeMailForm.to.value = "";
+    composeMailForm.subject.value = "";
+    composeMailForm.body.value = "";
 });
 
 composeMailForm.addEventListener("submit", (e) => {
@@ -278,7 +281,7 @@ composeMailForm.addEventListener("submit", (e) => {
                 viewMailDiv.style.display = "block";
                 composeButton.style.display = "block";
             });
-        }
+        };
     });
 });
 
@@ -289,8 +292,9 @@ replyButton.addEventListener("click", () => {
     composeButton.style.display = "none";
     composeMailDiv.style.display = "block";
     composeMailForm.from.value = JSON.parse(localStorage.getItem("accountDetails"))["email"];
+    composeMailForm.body.value = "";
     getDoc(doc(firestore, "Mails", document.querySelector("#mailId").innerHTML)).then((snapshot) => {
-        composeMailForm.to.value = snapshot.data().to;
+        composeMailForm.to.value = snapshot.data().from;
         composeMailForm.subject.value = `RE: ${snapshot.data().subject}`;
     });
 });
