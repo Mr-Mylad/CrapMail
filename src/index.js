@@ -10,6 +10,7 @@ import {
     onSnapshot,
     deleteDoc,
     doc,
+    getDoc,
 } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -278,5 +279,18 @@ composeMailForm.addEventListener("submit", (e) => {
                 composeButton.style.display = "block";
             });
         }
+    });
+});
+
+// Replying functionality
+const replyButton = document.querySelector("#reply");
+replyButton.addEventListener("click", () => {
+    viewSpecificMailDiv.style.display = "none";
+    composeButton.style.display = "none";
+    composeMailDiv.style.display = "block";
+    composeMailForm.from.value = JSON.parse(localStorage.getItem("accountDetails"))["email"];
+    getDoc(doc(firestore, "Mails", document.querySelector("#mailId").innerHTML)).then((snapshot) => {
+        composeMailForm.to.value = snapshot.data().to;
+        composeMailForm.subject.value = `RE: ${snapshot.data().subject}`;
     });
 });
