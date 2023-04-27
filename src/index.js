@@ -134,6 +134,9 @@ const viewMailParentDiv = document.querySelector("#viewMail");
 const viewMailDiv = document.querySelector("#mails");
 const viewSpecificMailDiv = document.querySelector("#mail");
 
+// Makes an array with all the mails that the user has recieved or sent
+let mails = [];
+
 function loadMailViewer() {
     viewMailParentDiv.style.display = "block";
     loginForm.style.display = "none";
@@ -152,7 +155,6 @@ function loadMailViewer() {
                     mailNode.id = doc.id;
                     mailNode.className = "mail";
                     const dispName = doc2.data().dispName;
-                    console.log(dispName);
                     mailNode.innerHTML = `<p>${doc.data().subject}<br>Sent by: ${dispName}</p>`;
                     // Load specific mail
                     mailNode.addEventListener("click", () => {
@@ -167,7 +169,10 @@ function loadMailViewer() {
                         viewSpecificMailDiv.style.display = "block";
                         viewMailDiv.style.display = "none"
                     });
-                    viewMailDiv.appendChild(mailNode);
+                    if (mails.indexOf(doc.id) === -1) {
+                        mails.push(doc.id);
+                        viewMailDiv.appendChild(mailNode);
+                    }
                 });
             });
         });
@@ -182,7 +187,6 @@ function loadMailViewer() {
                     mailNode.id = doc.id;
                     mailNode.className = "mail";
                     const dispName = doc2.data().dispName;
-                    console.log(dispName);
                     mailNode.innerHTML = `<p>${doc.data().subject}<br>Sent to: ${dispName}</p>`;
                     // Load specific mail
                     mailNode.addEventListener("click", () => {
@@ -197,7 +201,10 @@ function loadMailViewer() {
                         viewSpecificMailDiv.style.display = "block";
                         viewMailDiv.style.display = "none"
                     });
-                    viewMailDiv.appendChild(mailNode);
+                    if (mails.indexOf(doc.id) === -1) {
+                        mails.push(doc.id);
+                        viewMailDiv.appendChild(mailNode);
+                    }
                 });
             });
         });
@@ -213,7 +220,6 @@ if (localStorage.getItem("accountDetails") !== null) {
 const deleteMailButton = document.querySelector("#deleteMail");
 deleteMailButton.addEventListener("click", () => {
     const mailId = document.querySelector("#mailId").innerHTML;
-    console.log(mailId);
     deleteDoc(doc(firestore, "Mails", mailId));
     viewSpecificMailDiv.style.display = "none";
     viewMailDiv.style.display = "block";
