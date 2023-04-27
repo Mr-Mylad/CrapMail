@@ -21,3 +21,9 @@ p[name="errorMessage"] {
     transform: translate(0, 0);
     transition: all 1s;
 }
+
+@media(prefers-reduced-motion: reduce) {
+    .animated {
+        transition: none;
+    }
+}
