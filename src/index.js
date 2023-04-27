@@ -10,6 +10,7 @@ import {
     onSnapshot,
     deleteDoc,
     doc,
+    or,
 } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -140,6 +141,8 @@ function loadMailViewer() {
     switchToSignUp.style.display = "none";
     switchToLogin.style.display = "none";
     const toUserQuery = query(mailsCollection, where("to", "==", JSON.parse(localStorage.getItem("accountDetails"))["email"]));
+    const fromUserQuery = query(mailsCollection, where("from", "==", JSON.parse(localStorage.getItem("accountDetails"))["email"]));
+    // Checks for RECIEVED mail
     onSnapshot(toUserQuery, (snapshot) => {
         snapshot.forEach(doc => {
             const dispNameQuery = query(UsersCollection, where("email", "==", doc.data().from));
@@ -151,6 +154,36 @@ function loadMailViewer() {
                     const dispName = doc2.data().dispName;
                     console.log(dispName);
                     mailNode.innerHTML = `<p>${doc.data().subject}<br>Sent by: ${dispName}</p>`;
+                    // Load specific mail
+                    mailNode.addEventListener("click", () => {
+                        const from = doc.data().from;
+                        // dispName already defined
+                        const subject = doc.data().subject;
+                        const body = doc.data().body;
+                        document.querySelector("#from").innerHTML = `Sent by: ${dispName} (${from})`;
+                        document.querySelector("#subject").innerHTML = subject;
+                        document.querySelector("#body").innerHTML = body;
+                        document.querySelector("#mailId").innerHTML = doc.id;
+                        viewSpecificMailDiv.style.display = "block";
+                        viewMailDiv.style.display = "none"
+                    });
+                    viewMailDiv.appendChild(mailNode);
+                });
+            });
+        });
+    });
+    // Checks for SENT mail 
+    onSnapshot(fromUserQuery, (snapshot) => {
+        snapshot.forEach(doc => {
+            const dispNameQuery = query(UsersCollection, where("email", "==", doc.data().to));
+            getDocs(dispNameQuery).then(snapshot => {
+                snapshot.docs.forEach(doc2 => {
+                    const mailNode = document.createElement("div");
+                    mailNode.id = doc.id;
+                    mailNode.className = "mail";
+                    const dispName = doc2.data().dispName;
+                    console.log(dispName);
+                    mailNode.innerHTML = `<p>${doc.data().subject}<br>Sent to: ${dispName}</p>`;
                     // Load specific mail
                     mailNode.addEventListener("click", () => {
                         const from = doc.data().from;
