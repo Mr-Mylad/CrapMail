@@ -1,11 +1,31 @@
+/* FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+body {
+    background-color: #131316;
+    color: #ffffff;
+    padding: 0;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
 p[name="errorMessage"] {
     color: red;
 }
 
 .mail {
     display: flex;
-    border: 5px black dashed;
+    border: 5px #898989 dashed;
     margin-bottom: 15px;
+    background-color: white;
+    color: black;
+    font-size: 15px;
+    border-radius: 0%;
+    cursor: pointer;
+}
+
+.mail:hover {
+    background-color: #D8D8D8;
 }
 
 .animated {
@@ -19,11 +39,34 @@ p[name="errorMessage"] {
     opacity: 1;
     filter: blur(0);
     transform: translate(0, 0);
-    transition: all 1s;
 }
 
 @media(prefers-reduced-motion: reduce) {
     .animated {
         transition: none;
     }
+}
+
+button {
+    border: 5px dashed white;
+    padding: -15%;
+    background-color: #C7870B;
+    border-radius: 0%;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+}
+button:hover {
+    background-color: #875B07;
+}
+
+input {
+    font-family: 'Poppins', sans-serif;
+    color: black;
+    background-color: #939393;
+}
+
+textarea {
+    font-family: 'Poppins', sans-serif;
+    color: black;
+    background-color: #939393;
 }
