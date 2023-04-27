@@ -264,7 +264,7 @@ composeMailForm.addEventListener("submit", (e) => {
             alert("User doesn\'t exist!");
             return;
         }
-    })
+    });
     const subject = composeMailForm.subject.value;
     const body = composeMailForm.body.value;
     addDoc(mailsCollection, {
@@ -276,5 +276,6 @@ composeMailForm.addEventListener("submit", (e) => {
         alert("Email has been sent!");
         composeMailDiv.style.display = "none";
         viewMailDiv.style.display = "block";
+        composeButton.style.display = "block";
     });
 });
