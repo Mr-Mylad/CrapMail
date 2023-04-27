@@ -8,6 +8,8 @@ import {
     getDocs,
     addDoc,
     onSnapshot,
+    deleteDoc,
+    doc,
 } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -129,6 +131,7 @@ switchToLogin.addEventListener("click", () => {
 // Email viewer
 const viewMailParentDiv = document.querySelector("#viewMail");
 const viewMailDiv = document.querySelector("#mails");
+const viewSpecificMailDiv = document.querySelector("#mail");
 
 function loadMailViewer() {
     viewMailParentDiv.style.display = "block";
@@ -148,6 +151,19 @@ function loadMailViewer() {
                         const dispName = doc2.data().dispName;
                         console.log(dispName);
                         mailNode.innerHTML = `<p>${doc.data().subject}<br>Sent by: ${dispName}</p>`;
+                        // Load specific mail
+                        mailNode.addEventListener("click", () => {
+                            const from = doc.data().from;
+                            // dispName already defined
+                            const subject = doc.data().subject;
+                            const body = doc.data().body;
+                            document.querySelector("#from").innerHTML = `Sent by: ${dispName} (${from})`;
+                            document.querySelector("#subject").innerHTML = subject;
+                            document.querySelector("#body").innerHTML = body;
+                            document.querySelector("#mailId").innerHTML = doc.id;
+                            viewSpecificMailDiv.style.display = "block";
+                            viewMailDiv.style.display = "none"
+                        });
                         viewMailDiv.appendChild(mailNode);
                     });
                 });
@@ -160,3 +176,14 @@ function loadMailViewer() {
 if (localStorage.getItem("accountDetails") !== null) {
     loadMailViewer();
 }
+
+// Deleting mail code
+const deleteMailButton = document.querySelector("#deleteMail");
+deleteMailButton.addEventListener("click", () => {
+    const mailId = document.querySelector("#mailId").innerHTML;
+    console.log(mailId);
+    deleteDoc(doc(firestore, "Mails", mailId));
+    viewSpecificMailDiv.style.display = "none";
+    viewMailDiv.style.display = "block";
+    document.querySelector(`#${mailId}`).remove();
+});
