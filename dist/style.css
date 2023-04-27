@@ -12,12 +12,12 @@ p[name="errorMessage"] {
     opacity: 0;
     filter: blur(15px);
     transform: translate(-30%, -30%);
-    transition: all 3s;
+    transition: all 1s;
 }
 
 .show {
     opacity: 1;
     filter: blur(0);
     transform: translate(0, 0);
-    transition: all 3s;
+    transition: all 1s;
 }

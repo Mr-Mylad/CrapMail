@@ -50,8 +50,10 @@ const observer = new IntersectionObserver((entries) => {
     });
 });
 
-const animatedElements = document.querySelectorAll(".animated");
-animatedElements.forEach(element => observer.observe(element));
+setInterval(() => {
+    const animatedElements = document.querySelectorAll(".animated");
+    animatedElements.forEach(element => observer.observe(element));
+}, 1);
 
 // Login code
 const loginForm = document.querySelector("#login");
@@ -167,7 +169,7 @@ function loadMailViewer() {
                 snapshot.docs.forEach(doc2 => {
                     const mailNode = document.createElement("div");
                     mailNode.id = doc.id;
-                    mailNode.className = "mail";
+                    mailNode.className = "mail animated";
                     const dispName = doc2.data().dispName;
                     mailNode.innerHTML = `<p>${doc.data().subject}<br>Sent by: ${dispName}</p>>`;
                     // Load specific mail
@@ -199,7 +201,7 @@ function loadMailViewer() {
                 snapshot.docs.forEach(doc2 => {
                     const mailNode = document.createElement("div");
                     mailNode.id = doc.id;
-                    mailNode.className = "mail";
+                    mailNode.className = "mail animated";
                     const dispName = doc2.data().dispName;
                     mailNode.innerHTML = `<p>${doc.data().subject}<br>Sent to: ${dispName}</p>`;
                     // Load specific mail
