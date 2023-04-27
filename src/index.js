@@ -294,3 +294,10 @@ replyButton.addEventListener("click", () => {
         composeMailForm.subject.value = `RE: ${snapshot.data().subject}`;
     });
 });
+
+// Logout functionality
+const logoutButton = document.querySelector("#logout");
+logoutButton.addEventListener("click", () => {
+    localStorage.clear(); 
+    location.reload();
+});
