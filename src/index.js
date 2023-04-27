@@ -227,9 +227,9 @@ deleteMailButton.addEventListener("click", () => {
     mails.pop(mailId);
 });
 
-// Back to inbox
-const backToInboxButton = document.querySelector("#backToInbox");
-backToInboxButton.addEventListener("click", () => {
+// Back to inbox Specific mail
+const backToInboxSpecificButton = document.querySelector("#backToInboxSpecific");
+backToInboxSpecificButton.addEventListener("click", () => {
     viewMailDiv.style.display = "block";
     viewSpecificMailDiv.style.display = "none";
 });
@@ -269,7 +269,8 @@ composeMailForm.addEventListener("submit", (e) => {
             return;
         } else {
             const subject = composeMailForm.subject.value;
-            const body = composeMailForm.body.value;
+            let body = composeMailForm.body.value;
+            body = body.replace(/\n/g, "<br>");
             addDoc(mailsCollection, {
                 from: JSON.parse(localStorage.getItem("accountDetails"))["email"],
                 to: to,
@@ -292,10 +293,10 @@ replyButton.addEventListener("click", () => {
     composeButton.style.display = "none";
     composeMailDiv.style.display = "block";
     composeMailForm.from.value = JSON.parse(localStorage.getItem("accountDetails"))["email"];
-    composeMailForm.body.value = "";
     getDoc(doc(firestore, "Mails", document.querySelector("#mailId").innerHTML)).then((snapshot) => {
         composeMailForm.to.value = snapshot.data().from;
         composeMailForm.subject.value = `RE: ${snapshot.data().subject}`;
+        composeMailForm.body.value = `<br>-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=<br>${snapshot.data().body}`;
     });
 });
 
@@ -304,4 +305,12 @@ const logoutButton = document.querySelector("#logout");
 logoutButton.addEventListener("click", () => {
     localStorage.clear(); 
     location.reload();
+});
+
+// Go back to inbox compose
+const backToInboxComposeButton = document.querySelector("#backToInboxCompose");
+backToInboxComposeButton.addEventListener("click", () => {
+    viewMailDiv.style.display = "block";
+    composeButton.style.display = "block";
+    composeMailDiv.style.display = "none";
 });
