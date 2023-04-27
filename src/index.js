@@ -226,3 +226,49 @@ backToInboxButton.addEventListener("click", () => {
     viewMailDiv.style.display = "block";
     viewSpecificMailDiv.style.display = "none";
 });
+
+// Composing mail
+const composeButton = document.querySelector("#composeButton");
+const composeMailDiv = document.querySelector("#compose");
+const composeMailForm = document.querySelector("#composeMailDetails");
+
+composeButton.addEventListener("click", () => {
+    composeButton.style.display = "none";
+    composeMailDiv.style.display = "block";
+    viewMailDiv.style.display = "none";
+    viewSpecificMailDiv.style.display = "none";
+    composeMailForm.from.value = JSON.parse(localStorage.getItem("accountDetails"))["email"];
+});
+
+composeMailForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    let to = composeMailForm.to.value.toLowerCase();
+    function removeSpaces() {
+        const emailArr = to.split("");
+        emailArr.forEach((i) => {
+            if (i === " ") {
+                emailArr.splice(emailArr.indexOf(" "), 1);
+            };
+        });
+        to = emailArr.join("");
+    };
+    const toUserExistsQuery = query(UsersCollection, where("email", "==", to));
+    getDocs(toUserExistsQuery).then((snapshot) => {
+        if (snapshot.size === 0) {
+            alert("User doesn\'t exist!");
+            return;
+        }
+    })
+    const subject = composeMailForm.subject.value;
+    const body = composeMailForm.body.value;
+    addDoc(mailsCollection, {
+        from: JSON.parse(localStorage.getItem("accountDetails"))["email"],
+        to: to,
+        subject: subject,
+        body: body
+    }).then(() => {
+        alert("Email has been sent!");
+        composeMailDiv.style.display = "none";
+        viewMailDiv.style.display = "block";
+    });
+});
