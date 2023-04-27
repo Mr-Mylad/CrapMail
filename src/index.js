@@ -72,7 +72,7 @@ loginForm.addEventListener("submit", (e) => {
                 RealPassword = doc.data().password;
             });
             if (RealPassword !== loginForm.password.value) {
-                errorLogger.innerHTML = "Incorrect password! Please try again, or make a new account!";
+                errorLogger.innerHTML = "Incorrect password! Please try again, or make a new account and mail \"support@crapmail.ml\"!";
                 return;
             } else {
                 errorLogger.innerHTML = "Logging you in!";
