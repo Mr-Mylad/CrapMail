@@ -187,3 +187,10 @@ deleteMailButton.addEventListener("click", () => {
     viewMailDiv.style.display = "block";
     document.querySelector(`#${mailId}`).remove();
 });
+
+// Back to inbox
+const backToInboxButton = document.querySelector("#backToInbox");
+backToInboxButton.addEventListener("click", () => {
+    viewMailDiv.style.display = "block";
+    viewSpecificMailDiv.style.display = "none";
+});
