@@ -155,7 +155,7 @@ function loadMailViewer() {
                     mailNode.id = doc.id;
                     mailNode.className = "mail";
                     const dispName = doc2.data().dispName;
-                    mailNode.innerHTML = `<p>${doc.data().subject}<br>Sent by: ${dispName}</p>`;
+                    mailNode.innerHTML = `<p>${doc.data().subject}<br>Sent by: ${dispName}</p>>`;
                     // Load specific mail
                     mailNode.addEventListener("click", () => {
                         const from = doc.data().from;

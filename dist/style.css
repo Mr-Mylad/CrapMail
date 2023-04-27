@@ -5,4 +5,5 @@ p[name="errorMessage"] {
 .mail {
     display: flex;
     border: 5px black dashed;
+    margin-bottom: 15px;
 }
