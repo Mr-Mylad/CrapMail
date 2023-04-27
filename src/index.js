@@ -10,7 +10,6 @@ import {
     onSnapshot,
     deleteDoc,
     doc,
-    or,
 } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -258,25 +257,26 @@ composeMailForm.addEventListener("submit", (e) => {
             };
         });
         to = emailArr.join("");
-    };
+    }; removeSpaces();
     const toUserExistsQuery = query(UsersCollection, where("email", "==", to));
     getDocs(toUserExistsQuery).then((snapshot) => {
         if (snapshot.size === 0) {
             alert("User doesn\'t exist!");
             return;
+        } else {
+            const subject = composeMailForm.subject.value;
+            const body = composeMailForm.body.value;
+            addDoc(mailsCollection, {
+                from: JSON.parse(localStorage.getItem("accountDetails"))["email"],
+                to: to,
+                subject: subject,
+                body: body
+            }).then(() => {
+                alert("Email has been sent!");
+                composeMailDiv.style.display = "none";
+                viewMailDiv.style.display = "block";
+                composeButton.style.display = "block";
+            });
         }
-    });
-    const subject = composeMailForm.subject.value;
-    const body = composeMailForm.body.value;
-    addDoc(mailsCollection, {
-        from: JSON.parse(localStorage.getItem("accountDetails"))["email"],
-        to: to,
-        subject: subject,
-        body: body
-    }).then(() => {
-        alert("Email has been sent!");
-        composeMailDiv.style.display = "none";
-        viewMailDiv.style.display = "block";
-        composeButton.style.display = "block";
     });
 });
