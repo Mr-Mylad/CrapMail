@@ -155,10 +155,7 @@ let mails = [];
 
 function loadMailViewer() {
     viewMailParentDiv.style.display = "block";
-    loginForm.style.display = "none";
-    signupForm.style.display = "none";
-    switchToSignUp.style.display = "none";
-    switchToLogin.style.display = "none";
+    document.querySelector("#LoginSignup").style.display = "none";
     const toUserQuery = query(mailsCollection, where("to", "==", JSON.parse(localStorage.getItem("accountDetails"))["email"]));
     const fromUserQuery = query(mailsCollection, where("from", "==", JSON.parse(localStorage.getItem("accountDetails"))["email"]));
     // Checks for RECIEVED mail
