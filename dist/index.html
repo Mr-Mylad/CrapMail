@@ -26,7 +26,7 @@
             </form>
             <button id="switchToSignUp" class="animated">Don't have an account? Sign up here!</button>
             
-            <form class="animated" id="signup" style="display: none">
+            <form class="animated hidden" id="signup">
                 <h1>Signup</h1>
                 <input type="text" name="email" placeholder="Your email address here" required>
                 <br>
@@ -40,7 +40,7 @@
                 <br>
                 <br>
             </form>
-            <button id="switchToLogin" class="animated" style="display: none;">Already have an account? Log in here!</button>
+            <button id="switchToLogin" class="animated hidden">Already have an account? Log in here!</button>
             <!-- Google Display ad -->
             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2801821744481431" crossorigin="anonymous"></script>
             <ins class="adsbygoogle"
@@ -52,7 +52,7 @@
                 (adsbygoogle = window.adsbygoogle || []).push({});
             </script>
         </div>
-        <div id="viewMail" style="display: none;">
+        <div id="viewMail" class="animated hidden">
             <button id="composeButton" class="animated">Compose</button>
             <br><br>
             <div id="mails">
@@ -71,12 +71,12 @@
                     (adsbygoogle = window.adsbygoogle || []).push({});
                 </script>
             </div>
-            <div id="mail" class="animated" style="display: none;">
+            <div id="mail" class="animated hidden">
                 <!--This is where a specific mail data will go-->
                 <h3 id="from"></h3>
                 <h1 id="subject"></h1>
                 <p id="body"></p>
-                <p id="mailId" style="display: none;"></p>
+                <p id="mailId" class="hidden"></p>
                 <button id="backToInboxSpecific">Go to inbox</button>
                 <br>
                 <br>
@@ -85,7 +85,7 @@
                 <br>
                 <button id="deleteMail" style="color: red; font-weight: bold;">Delete mail (THIS ACTION IS PERMANENT AND THE MAIL WILL BE DELETED FOR ALL VIEWERS)</button>
             </div>
-            <div id="compose" class="animated" style="display: none;">
+            <div id="compose" class="animated hidden">
                 <form id="composeMailDetails">
                     <br>
                     <input type="text" name="from" value="" readonly>

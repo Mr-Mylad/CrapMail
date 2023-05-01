@@ -72,3 +72,7 @@ textarea {
     color: black;
     background-color: #939393;
 }
+
+.hidden {
+    display: none;
+}

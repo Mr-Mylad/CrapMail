@@ -130,19 +130,19 @@ signupForm.addEventListener("submit", (e) => {
 // Switch to signup button
 const switchToSignUp = document.querySelector("#switchToSignUp");
 switchToSignUp.addEventListener("click", () => {
-    signupForm.style.display = "block";
-    loginForm.style.display = "none";
-    switchToSignUp.style.display = "none";
-    switchToLogin.style.display = "block";
+    signupForm.classList.remove("hidden");
+    loginForm.classList.add("hidden");
+    switchToSignUp.classList.add("hidden");
+    switchToLogin.classList.remove("hidden");
 });
 
 // Signup to login button
 const switchToLogin = document.querySelector("#switchToLogin");
 switchToLogin.addEventListener("click", () => {
-    loginForm.style.display = "block";
-    signupForm.style.display = "none";
-    switchToSignUp.style.display = "block";
-    switchToLogin.style.display = "none";
+    loginForm.classList.remove("hidden");
+    signupForm.classList.add("hidden");
+    switchToSignUp.classList.remove("hidden");
+    switchToLogin.classList.add("hidden");
 });
 
 // Email viewer
@@ -154,8 +154,8 @@ const viewSpecificMailDiv = document.querySelector("#mail");
 let mails = [];
 
 function loadMailViewer() {
-    viewMailParentDiv.style.display = "block";
-    document.querySelector("#LoginSignup").style.display = "none";
+    viewMailParentDiv.classList.remove("hidden");
+    document.querySelector("#LoginSignup").classList.add("hidden");
     const toUserQuery = query(mailsCollection, where("to", "==", JSON.parse(localStorage.getItem("accountDetails"))["email"]));
     const fromUserQuery = query(mailsCollection, where("from", "==", JSON.parse(localStorage.getItem("accountDetails"))["email"]));
     // Checks for RECIEVED mail
@@ -179,8 +179,8 @@ function loadMailViewer() {
                         document.querySelector("#subject").innerHTML = subject;
                         document.querySelector("#body").innerHTML = body;
                         document.querySelector("#mailId").innerHTML = doc.id;
-                        viewSpecificMailDiv.style.display = "block";
-                        viewMailDiv.style.display = "none"
+                        viewSpecificMailDiv.classList.remove("hidden");
+                        viewMailDiv.classList.add("hidden")
                     });
                     if (mails.indexOf(doc.id) === -1) {
                         mails.push(doc.id);
@@ -211,8 +211,8 @@ function loadMailViewer() {
                         document.querySelector("#subject").innerHTML = subject;
                         document.querySelector("#body").innerHTML = body;
                         document.querySelector("#mailId").innerHTML = doc.id;
-                        viewSpecificMailDiv.style.display = "block";
-                        viewMailDiv.style.display = "none"
+                        viewSpecificMailDiv.classList.remove("hidden");
+                        viewMailDiv.classList.add("hidden")
                     });
                     if (mails.indexOf(doc.id) === -1) {
                         mails.push(doc.id);
@@ -234,8 +234,8 @@ const deleteMailButton = document.querySelector("#deleteMail");
 deleteMailButton.addEventListener("click", () => {
     const mailId = document.querySelector("#mailId").innerHTML;
     deleteDoc(doc(firestore, "Mails", mailId));
-    viewSpecificMailDiv.style.display = "none";
-    viewMailDiv.style.display = "block";
+    viewSpecificMailDiv.classList.add("hidden");
+    viewMailDiv.classList.remove("hidden");
     document.querySelector(`#${mailId}`).remove();
     mails.pop(mailId);
 });
@@ -243,8 +243,8 @@ deleteMailButton.addEventListener("click", () => {
 // Back to inbox Specific mail
 const backToInboxSpecificButton = document.querySelector("#backToInboxSpecific");
 backToInboxSpecificButton.addEventListener("click", () => {
-    viewMailDiv.style.display = "block";
-    viewSpecificMailDiv.style.display = "none";
+    viewMailDiv.classList.remove("hidden");
+    viewSpecificMailDiv.classList.add("hidden");
 });
 
 // Composing mail
@@ -253,10 +253,10 @@ const composeMailDiv = document.querySelector("#compose");
 const composeMailForm = document.querySelector("#composeMailDetails");
 
 composeButton.addEventListener("click", () => {
-    composeButton.style.display = "none";
-    composeMailDiv.style.display = "block";
-    viewMailDiv.style.display = "none";
-    viewSpecificMailDiv.style.display = "none";
+    composeButton.classList.add("hidden");
+    composeMailDiv.classList.remove("hidden");
+    viewMailDiv.classList.add("hidden");
+    viewSpecificMailDiv.classList.add("hidden");
     composeMailForm.from.value = JSON.parse(localStorage.getItem("accountDetails"))["email"];
     composeMailForm.to.value = "";
     composeMailForm.subject.value = "";
@@ -291,9 +291,9 @@ composeMailForm.addEventListener("submit", (e) => {
                 body: body
             }).then(() => {
                 alert("Email has been sent!");
-                composeMailDiv.style.display = "none";
-                viewMailDiv.style.display = "block";
-                composeButton.style.display = "block";
+                composeMailDiv.classList.add("hidden");
+                viewMailDiv.classList.remove("hidden");
+                composeButton.classList.remove("hidden");
             });
         };
     });
@@ -302,9 +302,9 @@ composeMailForm.addEventListener("submit", (e) => {
 // Replying functionality
 const replyButton = document.querySelector("#reply");
 replyButton.addEventListener("click", () => {
-    viewSpecificMailDiv.style.display = "none";
-    composeButton.style.display = "none";
-    composeMailDiv.style.display = "block";
+    viewSpecificMailDiv.classList.add("hidden");
+    composeButton.classList.add("hidden");
+    composeMailDiv.classList.remove("hidden");
     composeMailForm.from.value = JSON.parse(localStorage.getItem("accountDetails"))["email"];
     getDoc(doc(firestore, "Mails", document.querySelector("#mailId").innerHTML)).then((snapshot) => {
         composeMailForm.to.value = snapshot.data().from;
@@ -323,7 +323,7 @@ logoutButton.addEventListener("click", () => {
 // Go back to inbox compose
 const backToInboxComposeButton = document.querySelector("#backToInboxCompose");
 backToInboxComposeButton.addEventListener("click", () => {
-    viewMailDiv.style.display = "block";
-    composeButton.style.display = "block";
-    composeMailDiv.style.display = "none";
+    viewMailDiv.classList.remove("hidden");
+    composeButton.classList.remove("hidden");
+    composeMailDiv.classList.add("hidden");
 });
