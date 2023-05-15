@@ -226,8 +226,28 @@ function loadMailViewer() {
 
 // Loads the mail viewer if the user has logged in once
 if (localStorage.getItem("accountDetails") !== null) {
-    loadMailViewer();
-}
+    const localStorageAccountDetails = JSON.parse(localStorage.getItem("accountDetails"));
+    const currentEmail = localStorageAccountDetails["email"];
+    const currentPassword = localStorageAccountDetails["password"];
+    const Query = query(UsersCollection, where("email", "==", currentEmail));
+    getDocs(Query).then(snapshot => {
+        if (snapshot.size === 0) {
+            localStorage.clear();
+            location.reload();
+        } else {
+          let RealPassword = null;
+            snapshot.docs.forEach((doc) => {
+                RealPassword = doc.data().password;
+            });
+            if (RealPassword !== currentPassword) {
+                localStorage.clear();
+                location.reload();
+            } else {
+                loadMailViewer();
+            };
+        };
+    });
+};
 
 // Deleting mail code
 const deleteMailButton = document.querySelector("#deleteMail");
